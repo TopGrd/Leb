@@ -1,0 +1,2 @@
+# domReay
+a domReady function
