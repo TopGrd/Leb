@@ -13,7 +13,7 @@ function domReady(callback) {
 
     var testDiv,
         isTop;
-
+    // justage
     if (domReady.done)
         return callback();
 
