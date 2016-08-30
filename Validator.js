@@ -2,19 +2,33 @@
 * @Date:   2016-08-25T10:37:34+08:00
 * @Author: Li'Zhuo
 * @Email:  topgrd@outlook.com
-* @Last modified time: 2016-08-25T17:25:01+08:00
+* @Last modified time: 2016-08-26T10:26:09+08:00
 */
 
 /**
  * Validator 验证类
- * @param [Object] 校验对象
+ * 支持链式调用
  */
-function Validator(data) {
-    if (data === null || typeof data === 'undefined') {
+function Validator() {
+
+    // 针对一个键值是否可继续验证（isNotRequired是为空）
+    this.canValidate = true;
+    // 验证结果
+    this.result = true;
+}
+
+/**
+ * Validator 数据注入
+ * @param  {Object} data 需要验证的数据
+ * @return {Validator}      [链式]
+ */
+Validator.prototype.injector = function (data) {
+    if (data === null || typeof data === 'undefined' || data === '') {
         this.throwError('请传入校验数据 type [Object]');
     }
     this.data = data;
-}
+    return this;
+};
 
 /**
  * 抛出错误
@@ -22,6 +36,7 @@ function Validator(data) {
  * @return {Object}         返回错误信息
  */
 Validator.prototype.throwError = function(message) {
+    this.result = false;
     console.error(message);
     return;
 };
@@ -33,15 +48,18 @@ Validator.prototype.throwError = function(message) {
  * @return {Validator}
  */
 Validator.prototype.check = function(key, rules) {
-
-    if (rules) {
-        for (var i = 0; i < rules.length; i++) {
-            this.validate(key, rules[i])
-        }
-    } else {
+    if (!rules) {
         this.throwError("没有添加验证规则");
+        this.canValidate = false;
+        return;
     }
 
+    for (var i = 0; i < rules.length; i++) {
+        if (this.canValidate) {
+            this.validate(key, rules[i])
+        }
+    }
+    this.canValidate = true;
     return this;
 };
 
@@ -54,6 +72,10 @@ Validator.prototype.check = function(key, rules) {
 Validator.prototype.validate = function(key, rule) {
     if (!isNaN(Number(rule))) {
         this.isLength(key, rule);
+        return this;
+    } else if ((/^maxLength/).test(rule)) {
+        var len = rule.match(/\d+/);
+        this.maxLength(key, len)
         return this;
     } else if (!this.__proto__[rule]) {
         this.throwError('未知的验证规则');
@@ -70,11 +92,22 @@ Validator.prototype.validate = function(key, rule) {
  */
 Validator.prototype.isRequired = function(key) {
 
-    if (this.data[key] === null || typeof this.data[key] === 'undefined') {
+    if (this.data[key] === null || typeof this.data[key] === 'undefined' || this.data[key] === '') {
         this.throwError(key + '不能为空');
     }
 
     return this;
+}
+
+/**
+ * 非必需参数
+ * @param  {String} key   检测数据的键值
+ * @return {Validator}
+ */
+Validator.prototype.isNotRequired = function(key) {
+    if (this.data[key] === null || typeof this.data[key] === 'undefined' || this.data[key] === '') {
+        this.canValidate = false;
+    }
 }
 
 /**
@@ -144,13 +177,15 @@ Validator.prototype.isDate = function(key) {
     return this;
 }
 
-var data = {
-    order: '012312321',
-    id: '122',
-    date: '20161303'
+/**
+ * 最大长度验证
+ * @param  {String} key 检测数据的键值
+ * @param  {Number} len 长度
+ * @return {Validator}
+ */
+Validator.prototype.maxLength = function (key, len) {
+    if (this.data[key].toString().length > len) {
+        this.throwError(key + '的最大长度为' + len);
+    }
+    return this;
 }
-var val = new Validator(data);
-val.check('order', ['isRequired', 'isNumber']);
-val.check('id', ['isRequired', 'isString', 9]);
-val.check('id', ['isDate', 'isArray']);
-val.check('id', ['isDate', 'isArray']);
