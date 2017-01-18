@@ -1,0 +1,102 @@
+.container {
+  width: 500px;
+  height: 500px;
+  background: #fff;
+  margin: 100px auto;
+  position: relative;;
+}
+.slide {
+  width:300px;
+  height: 32px;
+  background: transparent;
+  position: absolute;
+  color: #9c9c9c;
+  font-size: 12px;
+  text-align: center;
+  line-height: 32px;
+  z-index: 1;
+}
+span.text {
+  width: 100%;
+  display: inline-block;
+  position: relative;
+  background: -webkit-gradient(linear,left top,right top,color-stop(0,#e8e8e8),color-stop(.4,#e8e8e8),color-stop(.5,#fff),color-stop(.6,#e8e8e8),color-stop(1,#e8e8e8));
+  background: gradient(linear,left top,right top,color-stop(0,#e8e8e8),color-stop(.4,#e8e8e8),color-stop(.5,#fff),color-stop(.6,#e8e8e8),color-stop(1,#e8e8e8));
+  -webkit-animation: slidetounlock 3s infinite;
+  animation: slidetounlock 3s infinite;
+  animation-timing-function: ease-in-out;
+  -webkit-animation-timing-function: ease-in-out;
+  z-index: 2;
+}
+@keyframes slidetounlock {
+  0% {
+    background-position: -200px 0;
+  }
+
+  100% {
+      background-position: 200px 0;
+  }
+}
+.captcha {
+  width: 300px;
+  height: 250px;
+  background: url(../cap.jpg);
+  background-size: cover;
+  position: relative;
+  bottom: 0;
+}
+.dh {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  background: url('../jc.png');
+  z-index: 100;
+}
+#slideBtn {
+  width: 40px;
+  height: 30px;
+  position: absolute;
+  background: #fff;
+  color: #737383;
+  border: 1px solid #ccc;
+  cursor: move;
+  text-align: center;
+  line-height: 32px;
+  left: 0;
+  z-index: 2;
+}
+.slide-container {
+  width: auto;
+  height: 34px;
+  background: transparent;
+  position: absolute;
+  color: #9c9c9c;
+  z-index: 1;
+}
+.al-container {
+  width: 300px;
+  background: #e8e8e8;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+.left {
+  height: 30px;
+  position: absolute;
+  background: #7ac23c;
+  z-index: 2;
+}
+.result {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  left: 300px;
+}
+.result-icon {
+  width: 32px;
+  height: 32px;
+  background-image: url(../lock.png);
+  background-size: cover;
+  display: inline-block;
+  background-position: 50% 50%;
+}
