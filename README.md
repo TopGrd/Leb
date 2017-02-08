@@ -51,3 +51,66 @@ ajax(options)
     console.warn(err);
   });
 ```
+* Element (一个用类似html标签格式创建dom的方法)  
+
+```js  
+let fee = '20';
+function createDiv() {
+  return document.createElement('div');
+}
+let ul = el('ul', {
+  id: 'bookList'
+}, [
+  // 用函数创建的子元素(HTMLDivElement)
+  createDiv(),
+  // 用el方法创建的子元素(Element)
+  el('li', {
+    class: 'item'
+  }, [
+    el('p', {
+      id: 'lip',
+      class: 'pen'
+    }, 'Hello Virtual Element')
+  ]),
+  el('li', {
+    class: 'item'
+  }, 'item1'),
+  el('li', {
+    class: 'item'
+  }, [
+    // 纯text的子元素
+    '价格',
+    el('span', {
+      id: 'fee'
+    }, '$' + fee),
+    el('span', {
+      id: 'node'
+    }, [
+      el('a', {
+        id: 'aa',
+        href: 'https://www.github.com'
+      }, 'github')
+    ]),
+  ])
+]);
+
+let rootEle = ul.render();
+let app = document.getElementById('app');
+app.appendChild(rootEle);
+```
+* data-bind (用es5里setter和getter实现数据的绑定)  
+```js
+var leb = new Leb({
+  el: '#app',
+  data: {
+    count: 0
+  },
+  methods: {
+    increment: function () {
+      this.count++;
+    }
+  }
+});
+console.log(leb.data.count);
+leb.methods.increment();
+```
