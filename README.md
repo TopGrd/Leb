@@ -114,3 +114,23 @@ var leb = new Leb({
 console.log(leb.data.count);
 leb.methods.increment();
 ```
+* uPromise (自己动手实现一个Promise类库)
+```js
+// test case
+var a = 'ss';
+var p = new uPromise((resolve, reject) => {
+  setTimeout(() => {
+    resolve(a);
+  }, 500);
+});
+p
+.then(a => {
+  return a + 'b';
+})
+.then(res => {
+  return res + 'c';
+})
+.then(res => {
+  console.log(res);
+});
+```
