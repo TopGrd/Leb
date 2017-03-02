@@ -133,4 +133,22 @@ p
 .then(res => {
   console.log(res);
 });
+```  
+* require.js AMD模块加载的简陋实现  
+```js
+  // a.js
+  define('a', ['b'], function (b) {
+    return b.name + ' is good';
+  });
+  // b.js
+  define('b', function () {
+    return {
+      name: 'topgrd',
+      job: 'fe'
+    };
+  });
+  // index.js
+  require(['a', 'b'], function(a, b) {
+    console.log(a.job, b); // fe, topgrd is good;
+  });
 ```
