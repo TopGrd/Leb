@@ -1,6 +1,4 @@
-
-
-(function (root) {
+(function(root) {
   var context = {
     topModule: '',
     modules: {},
@@ -21,7 +19,14 @@
     return context.waiting.length === 0;
   }
 
-  root.define = function (name, deps, callback) {
+  /**
+   * define
+   * @param  {String}   name     模块名
+   * @param  {Array}   deps     依赖模块数组
+   * @param  {Function} callback 回调函数
+   * @return
+   */
+  root.define = function(name, deps, callback) {
     // 无name require(['a', 'b'], function() {})
     if (typeof name !== 'string') {
       callback = deps;
@@ -54,10 +59,15 @@
         return item;
       });
     }
+  };
 
-  }
-
-  root.require = function (deps, callback) {
+  /**
+   * require
+   * @param  {Array}   deps     依赖模块数组
+   * @param  {Function} callback 回调
+   * @return
+   */
+  root.require = function(deps, callback) {
     if (!Array.isArray(deps)) {
       callback = deps;
       deps = null;
@@ -70,7 +80,7 @@
       name: topId,
       deps: deps,
       callback: callback,
-      callbackReturn : null,
+      callbackReturn: null,
       args: []
     };
 
@@ -83,14 +93,18 @@
       return item;
     });
 
-    context.waiting.map(function (dep) {
+    context.waiting.map(function(dep) {
       loadScript(dep);
     });
-  }
+  };
 
+  /**
+   * 写入script
+   * @param  {String} dep 模块名
+   */
   function loadScript(dep) {
     var script = document.createElement('script');
-    script.src = './js/' + dep + '.js';;
+    script.src = './js/' + dep + '.js';
     script.setAttribute('data-module', dep);
     script.async = true;
     document.querySelector('head').appendChild(script);
@@ -116,7 +130,7 @@
   function execCallback(module) {
     var args = module.args;
     if (module.deps && module.deps.length !== 0) {
-      module.deps.map(function (item, i) {
+      module.deps.map(function(item, i) {
         args[i] = execCallback(context.modules[item]);
       });
     }
