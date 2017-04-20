@@ -2,6 +2,7 @@
  * Class Middleware
  * description 中间件
  */
+
 class Middleware {
 	constructor() {
 		this.cache = []

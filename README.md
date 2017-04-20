@@ -1,13 +1,13 @@
-# Leb  
-a personal lib for my work.  
-# include  
-* domReady   (检测dom是否加载好，加载好则运行函数参数).  
+# Leb
+a personal lib for my work.
+# include
+* domReady   (检测dom是否加载好，加载好则运行函数参数).
 ```js
   domReady(function () {
     console.log('dom load');
   })
 ```
-* Validator  (一个验证库，支持链式调用.)  
+* Validator  (一个验证库，支持链式调用.)
 ```js
   var validator = new Validator();
   validator.injector({
@@ -21,8 +21,8 @@ a personal lib for my work.
     .check('name', ['isString', 'isRequired', 10])
     .check('count', ['less(100)']);
 ```
-* swipeCaptch (滑动验证初步Demo，支持电脑与手机，用于校验人机)  
-* ajax (ajax用promise封装)  
+* swipeCaptch (滑动验证初步Demo，支持电脑与手机，用于校验人机)
+* ajax (ajax用promise封装)
 ```js
 var options = {
   type: 'GET',
@@ -51,9 +51,9 @@ ajax(options)
     console.warn(err);
   });
 ```
-* Element (一个用类似html标签格式创建dom的方法)  
+* Element (一个用类似html标签格式创建dom的方法)
 
-```js  
+```js
 let fee = '20';
 function createDiv() {
   return document.createElement('div');
@@ -98,7 +98,7 @@ let rootEle = ul.render();
 let app = document.getElementById('app');
 app.appendChild(rootEle);
 ```
-* data-bind (用es5里setter和getter实现数据的绑定)  
+* data-bind (用es5里setter和getter实现数据的绑定)
 ```js
 var leb = new Leb({
   el: '#app',
@@ -133,8 +133,8 @@ p
 .then(res => {
   console.log(res);
 });
-```  
-* require.js AMD模块加载的简陋实现  
+```
+* require.js AMD模块加载的简陋实现
 ```js
   // a.js
   define('a', ['b'], function (b) {
@@ -151,4 +151,11 @@ p
   require(['a', 'b'], function(a, b) {
     console.log(a.job, b); // fe, topgrd is good;
   });
+```
+* Middleware 中间件
+```js
+  let app = new Middleware()
+  // 中间件函数参数为 共享的一个变量，和next eg: fn(ctx, next)
+  app.use(fn1).use(fn2).use(fn3)
+  app.run()
 ```
