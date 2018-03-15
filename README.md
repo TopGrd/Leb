@@ -212,7 +212,7 @@ app
 app.run()
 ```
 
-* ImageLoader 图片预加载 处理大量图片加载的情况 如 H5 动画
+* ImageLoader 图片预加载 处理大量图片加载的情况 如 H5 动画。图片路径数组建议用脚本读取图片目录生成
 
 ```js
 const imgs = [
