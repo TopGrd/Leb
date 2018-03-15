@@ -23,7 +23,7 @@ const bar = createProcess()
 
 const loader = new ImageLoader({
   urls: imgs,
-  timeout: 0,
+  timeout: 5000,
   update(val) {
     bar.style.width = `${val * 300}px`
   },
